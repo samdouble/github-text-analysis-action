@@ -1,0 +1,1 @@
+# github-proofreader-action
