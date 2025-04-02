@@ -1,1 +1,1 @@
-# github-proofreader-action
+# github-text-analysis-action
