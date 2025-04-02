@@ -3,10 +3,11 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "audit": "npm run audit",
-    "build": "tsc && ncc build lib/index.js",
-    "lint": "eslint lib/**/*.ts",
+    "audit": "npm-audit",
+    "build": "npm install -g @vercel/ncc && tsc && ncc build dist/index.js -o output",
+    "lint": "eslint",
     "test": "jest"
   },
   "keywords": [],
@@ -15,7 +16,6 @@
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
-    "@vercel/ncc": "^0.38.3",
     "eslint": "^9.23.0",
     "eslint-plugin-jest": "^28.11.0",
     "jest": "^29.7.0",
