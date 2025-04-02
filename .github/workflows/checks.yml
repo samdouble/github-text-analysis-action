@@ -18,6 +18,13 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: 22.9.0
+      - name: Run ESLint
+        run: |
+          ls -la lib/
+          npx eslint "lib/**/*.ts" --debug
+      - name: Check files
+        run: |
+          find lib -name "*.ts" -type f
       - name: Install
         run: |
           npm install

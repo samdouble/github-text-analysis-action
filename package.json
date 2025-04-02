@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "audit": "npm run audit",
     "build": "tsc && ncc build lib/index.js",
