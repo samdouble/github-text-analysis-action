@@ -3,12 +3,14 @@ name: Checks
 on: [pull_request]
 
 permissions:
-  contents: read
-  pull-requests: read
+  contents: write
+  pull-requests: write
 
 jobs:
   checks:
     runs-on: ubuntu-latest
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - name: Commitlint
         uses: wagoid/commitlint-github-action@v6
@@ -33,3 +35,7 @@ jobs:
       - name: Build
         run: |
           npm run build
+      - name: Push output folder
+        uses: int128/update-generated-files-action@v2
+        with:
+          commit-message: 'feat: add generated output folder'

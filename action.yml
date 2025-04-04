@@ -4,7 +4,7 @@ author: samdouble
 
 inputs:
   name:
-    description: 'The name of the person to greet'
+    description: The name of the person to greet
     required: true
     default: World
 
@@ -14,4 +14,4 @@ branding:
 
 runs:
   using: node20
-  main: 'output/index.js'
+  main: output/index.js
