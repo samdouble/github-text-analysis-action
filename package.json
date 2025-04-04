@@ -3,16 +3,19 @@
   "version": "0.1.0",
   "description": "A GitHub Action that performs simple checks on text",
   "main": "index.js",
-  "type": "module",
+  "keywords": [],
+  "author": "samdouble",
+  "license": "ISC",
   "scripts": {
     "audit": "npm-audit",
     "build": "npm install -g @vercel/ncc && tsc && ncc build dist/index.js -o output",
     "lint": "eslint",
     "test": "jest"
   },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "dependencies": {
+    "@actions/core": "^1.11.1",
+    "@actions/github": "^6.0.0"
+  },
   "devDependencies": {
     "@types/jest": "^29.5.14",
     "@typescript-eslint/eslint-plugin": "^8.29.0",
@@ -23,9 +26,5 @@
     "ts-jest": "^29.3.1",
     "ts-node": "^10.9.2",
     "typescript": "^5.8.2"
-  },
-  "dependencies": {
-    "@actions/core": "^1.11.1",
-    "@actions/github": "^6.0.0"
   }
 }
