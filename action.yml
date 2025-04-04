@@ -1,5 +1,5 @@
 name: Text Analysis Action
-description: An action that checks ce
+description: A GitHub Action that performs simple checks on text
 author: samdouble
 
 inputs:
@@ -14,4 +14,4 @@ branding:
 
 runs:
   using: node20
-  main: 'dist/index.js'
+  main: 'output/index.js'
