@@ -16,6 +16,7 @@ exports.run = run;
 const glob_1 = require("glob");
 const promises_1 = __importDefault(require("node:fs/promises"));
 const node_path_1 = __importDefault(require("node:path"));
+const html_1 = require("./parsers/html");
 const markdown_1 = require("./parsers/markdown");
 // import { getInput, setFailed } from '@actions/core';
 const config = [{
@@ -24,22 +25,6 @@ const config = [{
                 "max-sentence-length": 25,
             }],
     }];
-var NodeType;
-(function (NodeType) {
-    NodeType[NodeType["HTMLElement"] = 1] = "HTMLElement";
-    NodeType[NodeType["TextNode"] = 3] = "TextNode";
-})(NodeType || (NodeType = {}));
-const readNode = (node) => {
-    for (const childNode of node.childNodes) {
-        if (childNode.nodeType === NodeType.TextNode) {
-            console.log(childNode.rawText);
-        }
-        else if (childNode.nodeType === NodeType.HTMLElement) {
-            console.log(`Reading node ${childNode.rawTagName}`);
-            readNode(childNode);
-        }
-    }
-};
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         // const label = getInput('label');
@@ -47,15 +32,25 @@ function run() {
         for (const fileName of fileNames) {
             const fileContents = yield promises_1.default.readFile(fileName, { encoding: 'utf8' });
             const extension = node_path_1.default.extname(fileName);
-            const parsedHtml = yield (0, markdown_1.parseMarkdown)(fileContents);
             console.log(fileName);
-            readNode(parsedHtml);
-            const sentences = fileContents.split('.');
-            for (const sentence of sentences) {
-                const trimmedSentence = sentence.trim();
-                const words = trimmedSentence.split(' ');
-                if (words.length > 25) {
-                    //console.log(sentence);
+            let textNodes = [];
+            if (extension === '.html') {
+                const parsedHtml = (0, html_1.parseHtml)(fileContents);
+                textNodes = (0, html_1.readNode)(parsedHtml);
+            }
+            else if (extension === '.md') {
+                const parsedHtml = yield (0, markdown_1.parseMarkdown)(fileContents);
+                textNodes = (0, html_1.readNode)(parsedHtml);
+            }
+            for (const textNode of textNodes) {
+                console.log(textNode);
+                const sentences = textNode.split('.');
+                for (const sentence of sentences) {
+                    const trimmedSentence = sentence.trim();
+                    const words = trimmedSentence.split(' ');
+                    if (words.length > 25) {
+                        //console.log(sentence);
+                    }
                 }
             }
         }

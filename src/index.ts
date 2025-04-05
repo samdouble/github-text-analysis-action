@@ -1,8 +1,8 @@
 import { glob } from 'glob';
 import fs from 'node:fs/promises';
 import path from 'node:path';
+import { parseHtml, readNode } from './parsers/html';
 import { parseMarkdown } from './parsers/markdown';
-
 // import { getInput, setFailed } from '@actions/core';
 
 const config = [{
@@ -12,22 +12,6 @@ const config = [{
   }],
 }];
 
-enum NodeType {
-  HTMLElement = 1,
-  TextNode = 3,
-}
-
-const readNode = (node: any) => {
-  for (const childNode of node.childNodes) {
-    if (childNode.nodeType === NodeType.TextNode) {
-      console.log(childNode.rawText);
-    } else if (childNode.nodeType === NodeType.HTMLElement) {
-      console.log(`Reading node ${childNode.rawTagName}`);
-      readNode(childNode);
-    }
-  }
-};
-
 export async function run() {
   // const label = getInput('label');
 
@@ -35,15 +19,24 @@ export async function run() {
   for (const fileName of fileNames) {
     const fileContents = await fs.readFile(fileName, { encoding: 'utf8' });
     const extension = path.extname(fileName);
-    const parsedHtml = await parseMarkdown(fileContents);
     console.log(fileName);
-    readNode(parsedHtml);
-    const sentences = fileContents.split('.');
-    for (const sentence of sentences) {
-      const trimmedSentence = sentence.trim();
-      const words = trimmedSentence.split(' ');
-      if (words.length > 25) {
-        //console.log(sentence);
+    let textNodes: string[] = [];
+    if (extension === '.html') {
+      const parsedHtml = parseHtml(fileContents);
+      textNodes = readNode(parsedHtml);
+    } else if (extension === '.md') {
+      const parsedHtml = await parseMarkdown(fileContents);
+      textNodes = readNode(parsedHtml);
+    }
+    for (const textNode of textNodes) {
+      console.log(textNode);
+      const sentences = textNode.split('.');
+      for (const sentence of sentences) {
+        const trimmedSentence = sentence.trim();
+        const words = trimmedSentence.split(' ');
+        if (words.length > 25) {
+          //console.log(sentence);
+        }
       }
     }
   }
