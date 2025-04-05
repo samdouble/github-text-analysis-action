@@ -12,12 +12,10 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const _1 = require(".");
 const core_1 = require("@actions/core");
 const github_1 = require("@actions/github");
-// Mock getInput and setFailed functions
 jest.mock('@actions/core', () => ({
     getInput: jest.fn(),
     setFailed: jest.fn(),
 }));
-// Mock context and getOctokit functions
 jest.mock('@actions/github', () => ({
     context: {
         payload: {
@@ -34,17 +32,14 @@ jest.mock('@actions/github', () => ({
 }));
 describe('run', () => {
     beforeEach(() => {
-        // Clear all mock function calls and reset mock implementation
         jest.clearAllMocks();
     });
     it('should add label to the pull request', () => __awaiter(void 0, void 0, void 0, function* () {
-        // Mock the return values for getInput
         core_1.getInput.mockReturnValueOnce('gh-token-value');
         core_1.getInput.mockReturnValueOnce('label-value');
         github_1.context.payload.pull_request = {
             number: 1,
         };
-        // Mock the Octokit instance and the addLabels method
         const mockAddLabels = jest.fn();
         const mockOctokit = {
             rest: {
@@ -54,9 +49,7 @@ describe('run', () => {
             },
         };
         github_1.getOctokit.mockReturnValueOnce(mockOctokit);
-        // Run the function
         yield (0, _1.run)();
-        // Assertions
         expect(core_1.getInput).toHaveBeenCalledWith('gh-token');
         expect(core_1.getInput).toHaveBeenCalledWith('label');
         expect(github_1.getOctokit).toHaveBeenCalledWith('gh-token-value');
