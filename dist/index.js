@@ -15,24 +15,42 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.run = run;
 const glob_1 = require("glob");
 const promises_1 = __importDefault(require("node:fs/promises"));
-const marked_1 = __importDefault(require("marked"));
+const node_path_1 = __importDefault(require("node:path"));
+const markdown_1 = require("./parsers/markdown");
 // import { getInput, setFailed } from '@actions/core';
 const config = [{
-        pattern: 'src/**/*.md',
+        patterns: ['src/**/*.md'],
         rules: [{
                 "max-sentence-length": 25,
-            }]
+            }],
     }];
+var NodeType;
+(function (NodeType) {
+    NodeType[NodeType["HTMLElement"] = 1] = "HTMLElement";
+    NodeType[NodeType["TextNode"] = 3] = "TextNode";
+})(NodeType || (NodeType = {}));
+const readNode = (node) => {
+    for (const childNode of node.childNodes) {
+        if (childNode.nodeType === NodeType.TextNode) {
+            console.log(childNode.rawText);
+        }
+        else if (childNode.nodeType === NodeType.HTMLElement) {
+            console.log(`Reading node ${childNode.rawTagName}`);
+            readNode(childNode);
+        }
+    }
+};
 function run() {
     return __awaiter(this, void 0, void 0, function* () {
         // const label = getInput('label');
-        const markdownFiles = yield (0, glob_1.glob)('src/**/*.md', { ignore: 'node_modules/**' });
-        for (const markdownFile of markdownFiles) {
-            const data = yield promises_1.default.readFile(markdownFile, { encoding: 'utf8' });
-            console.log(markdownFile);
-            const tokens = marked_1.default.parse(data);
-            console.log(tokens);
-            const sentences = data.split('.');
+        const fileNames = yield (0, glob_1.glob)('src/**/*.md', { ignore: 'node_modules/**' });
+        for (const fileName of fileNames) {
+            const fileContents = yield promises_1.default.readFile(fileName, { encoding: 'utf8' });
+            const extension = node_path_1.default.extname(fileName);
+            const parsedHtml = yield (0, markdown_1.parseMarkdown)(fileContents);
+            console.log(fileName);
+            readNode(parsedHtml);
+            const sentences = fileContents.split('.');
             for (const sentence of sentences) {
                 const trimmedSentence = sentence.trim();
                 const words = trimmedSentence.split(' ');
