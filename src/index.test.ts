@@ -28,7 +28,6 @@ describe('run', () => {
   });
 
   it('should add label to the pull request', async () => {
-    // (getInput as jest.Mock).mockReturnValueOnce('gh-token-value');
     // (getInput as jest.Mock).mockReturnValueOnce('label-value');
     // (context as any).payload.pull_request = {
     //   number: 1,
@@ -47,9 +46,7 @@ describe('run', () => {
     await run();
     expect(1).toBe(1);
 
-    // expect(getInput).toHaveBeenCalledWith('gh-token');
     // expect(getInput).toHaveBeenCalledWith('label');
-    // expect(getOctokit).toHaveBeenCalledWith('gh-token-value');
     // expect(mockAddLabels).toHaveBeenCalledWith({
     //   owner: 'owner',
     //   repo: 'repo',
