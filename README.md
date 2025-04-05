@@ -1,4 +1,4 @@
-# github-text-analysis-action
+# textlinter
 
 A GitHub Action that performs simple checks on text.
 
