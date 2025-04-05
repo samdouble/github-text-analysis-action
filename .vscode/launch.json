@@ -6,7 +6,7 @@
       "name": "ts-node",
       "type": "node",
       "request": "launch",
-      "args": ["./src/index.ts"],
+      "args": ["./library/src/index.ts"],
       "runtimeArgs": ["-r", "ts-node/register"],
       "cwd": "${workspaceRoot}",
       "internalConsoleOptions": "openOnSessionStart",
