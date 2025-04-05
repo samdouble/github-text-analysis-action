@@ -3,9 +3,6 @@ description: A GitHub Action that performs simple checks on text
 author: samdouble
 
 inputs:
-  gh-token:
-    description: 'The GitHub token for authentication.'
-    required: true
   label:
     description: 'The label to be applied to the pull request.'
     required: true
