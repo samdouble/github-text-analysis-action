@@ -9,8 +9,9 @@ permissions:
 jobs:
   checks:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    defaults:
+      run:
+        working-directory: ./library
     steps:
       - name: Commitlint
         uses: wagoid/commitlint-github-action@v6
@@ -35,7 +36,3 @@ jobs:
       - name: Build
         run: |
           npm run build
-      # - name: Push output folder
-      #   uses: int128/update-generated-files-action@v2
-      #   with:
-      #     commit-message: 'feat: add generated output folder'

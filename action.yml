@@ -4,7 +4,7 @@ author: samdouble
 
 inputs:
   label:
-    description: 'The label to be applied to the pull request.'
+    description: The label to be applied to the pull request.
     required: true
 
 branding:
@@ -13,4 +13,5 @@ branding:
 
 runs:
   using: node20
-  main: dist/index.js
+  pre: setup.sh
+  main: library/dist/cli.js
