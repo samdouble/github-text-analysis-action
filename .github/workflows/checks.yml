@@ -9,8 +9,9 @@ permissions:
 jobs:
   checks:
     runs-on: ubuntu-latest
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    defaults:
+      run:
+        working-directory: ./library
     steps:
       - name: Commitlint
         uses: wagoid/commitlint-github-action@v6
