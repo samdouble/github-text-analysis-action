@@ -48,7 +48,7 @@ describe('run', () => {
         //   },
         // };
         // (getOctokit as jest.Mock).mockReturnValueOnce(mockOctokit);
-        yield (0, _1.run)();
+        yield (0, _1.parse)();
         expect(1).toBe(1);
         // expect(getInput).toHaveBeenCalledWith('label');
         // expect(mockAddLabels).toHaveBeenCalledWith({

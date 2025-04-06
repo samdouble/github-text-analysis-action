@@ -1,4 +1,4 @@
-import { run } from '.';
+import { parse } from '.';
 // import { getInput, setFailed } from '@actions/core';
 // import { context, getOctokit } from '@actions/github';
 
@@ -43,7 +43,7 @@ describe('run', () => {
     // };
     // (getOctokit as jest.Mock).mockReturnValueOnce(mockOctokit);
 
-    await run();
+    await parse();
     expect(1).toBe(1);
 
     // expect(getInput).toHaveBeenCalledWith('label');
