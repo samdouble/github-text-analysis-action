@@ -13,5 +13,4 @@ branding:
 
 runs:
   using: node20
-  pre: setup.sh
-  main: library/dist/cli.js
+  main: dist/index.js
