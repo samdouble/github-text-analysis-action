@@ -9,9 +9,6 @@ permissions:
 jobs:
   checks:
     runs-on: ubuntu-latest
-    defaults:
-      run:
-        working-directory: ./library
     steps:
       - name: Commitlint
         uses: wagoid/commitlint-github-action@v6
