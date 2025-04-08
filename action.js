@@ -3,7 +3,8 @@ import { parse } from './dist/index.js';
 
 export async function run() {
   // const label = getInput('label');
-  parse();
+  const errors = await parse();
+  console.log(errors);
 }
 
 run();
